@@ -17,11 +17,6 @@ class Book {
          return $this->title;
      }
 
-
- 
-
-
-
  // TODO: Add getAvailableCopies method
      function getAvailableCopies() {
          return $this->availableCopies;
@@ -31,33 +26,62 @@ class Book {
 
  // TODO: Add borrowBook method
  
+ function borrowBook() {
+     if ($this->availableCopies > 0) {
+         $this->availableCopies--;
+         return true;
+     } else {
+         return false;
+     }
+ }
 
 
 
  // TODO: Add returnBook method
+ function returnBook() {
+     $this->availableCopies++;  
+ }
  
 }
 
 
 class Member {
  // TODO: Add properties as Private
+ private $name;
+ private $borrowedBooks = [];
 
 
 
  public function __construct($name) {
       // TODO: Initialize properties
+      $this->name = $name;
      }
 
 
 
  // TODO: Add getName method
+     function getName() {
+         return $this->name;
+     }
  
  // TODO: Add borrowBook method
+ public function borrowBook($book) {
+     if ($book->borrowBook()) {
+         $this->borrowedBooks[] = $book;
+         return true;
+     } else {
+         return false;
+     }
+ }
  
 
 
 
  // TODO: Add returnBook method
+ public function returnBook($book) {
+     $book->returnBook();
+     unset($this->borrowedBooks[array_search($book, $this->borrowedBooks)]);
+ }
  
 }
 
